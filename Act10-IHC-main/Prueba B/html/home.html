@@ -1,0 +1,861 @@
+<!-- Código modificado por Steeven -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShenEmi</title>
+    <link rel="icon" type="../image/png" href="../images/icon.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link visually-hidden-focusable">Saltar al contenido principal</a>
+    
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+        <div class="container">
+            
+            <a class="navbar-brand d-flex align-items-center" href="home.html">
+                <i class="bi bi-shop me-2 text-primary" aria-hidden="true"></i>
+                <span class="fw-bold">ShenEmi</span>
+            </a>
+            
+            
+            <div class="mx-auto d-none d-md-block" style="max-width: 400px; width: 100%;">
+                <form class="position-relative" role="search">
+                    <input 
+                        class="form-control" 
+                        type="search" 
+                        placeholder="Buscar productos..."
+                        aria-label="Buscar productos"
+                        id="searchInput"
+                    >
+                    <button 
+                        class="btn btn-link position-absolute end-0 top-50 translate-middle-y"
+                        type="submit"
+                        aria-label="Buscar"
+                    >
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+            </div>
+            
+            
+            <div class="d-flex align-items-center">
+                
+                <button 
+                    type="button" 
+                    class="btn btn-outline-secondary btn-sm me-2" 
+                    id="themeToggle"
+                    aria-label="Cambiar tema de la aplicación"
+                >
+                    <i class="bi bi-moon-fill" aria-hidden="true"></i>
+                </button>
+                
+                
+                <a 
+                    href="cart.html" 
+                    class="btn btn-outline-primary position-relative me-2"
+                    aria-label="Ver carrito de compras"
+                >
+                    <i class="bi bi-cart" aria-hidden="true"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">
+                        3
+                        <span class="visually-hidden">productos en el carrito</span>
+                    </span>
+                </a>
+                
+                
+                <div class="dropdown">
+                    <button 
+                        class="btn btn-outline-secondary dropdown-toggle" 
+                        type="button" 
+                        id="userMenu" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"
+                        aria-label="Menú de usuario"
+                    >
+                        <i class="bi bi-person" aria-hidden="true"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2" aria-hidden="true"></i>Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-clock-history me-2" aria-hidden="true"></i>Historial</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    
+    <main id="main-content" class="container py-4">
+        
+        <section class="mb-4">
+            <h1 class="visually-hidden">Categorías de productos</h1>
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                <button 
+                    class="btn btn-primary category-btn active" 
+                    data-category="all"
+                    aria-pressed="true"
+                >
+                    <i class="bi bi-fire me-1" aria-hidden="true"></i>
+                    Todos
+                </button>
+                <button 
+                    class="btn btn-outline-secondary category-btn" 
+                    data-category="pizza"
+                    aria-pressed="false"
+                >
+                    <i class="bi bi-circle me-1" aria-hidden="true"></i>
+                    Pizza
+                </button>
+                <button 
+                    class="btn btn-outline-secondary category-btn" 
+                    data-category="hamburger"
+                    aria-pressed="false"
+                >
+                    <i class="bi bi-layers me-1" aria-hidden="true"></i>
+                    Hamburguesa
+                </button>
+                <button 
+                    class="btn btn-outline-secondary category-btn" 
+                    data-category="family"
+                    aria-pressed="false"
+                >
+                    <i class="bi bi-people-fill me-1" aria-hidden="true"></i>
+                    Familiar
+                </button>
+                <button 
+                    class="btn btn-outline-secondary category-btn" 
+                    data-category="combo"
+                    aria-pressed="false"
+                >
+                    <i class="bi bi-cup-straw me-1" aria-hidden="true"></i>
+                    Combos
+                </button>
+            </div>
+            
+            <!-- Filtros adicionales por precio y promociones -->
+            <div class="d-flex flex-wrap gap-2 align-items-center mt-3 pt-3 border-top">
+                <small class="text-muted me-2"><strong>Filtrar por:</strong></small>
+                <select class="form-select form-select-sm" style="width: auto;" id="priceFilter">
+                    <option value="all">Todos los precios</option>
+                    <option value="low">Menos de $10</option>
+                    <option value="medium">$10 - $20</option>
+                    <option value="high">Más de $20</option>
+                </select>
+                <button class="btn btn-outline-warning btn-sm" id="promoFilter">
+                    <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                    Promociones
+                </button>
+                <button class="btn btn-outline-success btn-sm" id="ratingFilter">
+                    <i class="bi bi-heart-fill me-1" aria-hidden="true"></i>
+                    Mejor valorados
+                </button>
+            </div>
+        </section>
+        
+        
+        <!-- Buscador móvil mejorado -->
+        <section class="d-md-none mb-4">
+            <div class="card bg-primary bg-gradient text-white mb-3">
+                <div class="card-body py-2">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-search me-2" aria-hidden="true"></i>
+                        <small><strong>¡Busca tu comida favorita!</strong></small>
+                    </div>
+                </div>
+            </div>
+            <form class="position-relative" role="search">
+                <input 
+                    class="form-control form-control-lg shadow-sm" 
+                    type="search" 
+                    placeholder="🔍 Buscar productos..."
+                    aria-label="Buscar productos"
+                    style="padding-left: 3rem;"
+                >
+                <button 
+                    class="btn btn-primary position-absolute start-0 top-50 translate-middle-y ms-1"
+                    type="submit"
+                    aria-label="Buscar"
+                    style="z-index: 5;"
+                >
+                    <i class="bi bi-search" aria-hidden="true"></i>
+                </button>
+            </form>
+        </section>
+        
+        <!-- Información de entrega y políticas -->
+        <section class="mb-4">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-clock text-primary fs-3 mb-2" aria-hidden="true"></i>
+                            <h3 class="card-title h6 mb-1">Tiempo de entrega</h3>
+                            <p class="card-text small mb-0">25-35 minutos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-truck text-success fs-3 mb-2" aria-hidden="true"></i>
+                            <h3 class="card-title h6 mb-1">Envío gratis</h3>
+                            <p class="card-text small mb-0">En pedidos > $15</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-shield-check text-warning fs-3 mb-2" aria-hidden="true"></i>
+                            <h3 class="card-title h6 mb-1">Garantía</h3>
+                            <p class="card-text small mb-0">100% satisfacción</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h3 mb-0">Productos Disponibles</h2>
+                <button class="btn btn-outline-secondary btn-sm d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#deliveryInfoModal">
+                    <i class="bi bi-info-circle me-1" aria-hidden="true"></i>
+                    Políticas de entrega
+                </button>
+            </div>
+            <div class="row g-3" id="productsContainer">
+                
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <article class="card h-100 product-card" data-category="family">
+                        <div class="position-relative product-image-container">
+                            <img 
+                                src="../images/familiar.png" 
+                                class="card-img-top product-image" 
+                                alt="Menú familiar con variedad de comidas"
+                            >
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                                    4.8
+                                </span>
+                            </div>
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-success">
+                                    <i class="bi bi-people-fill me-1" aria-hidden="true"></i>
+                                    Familiar
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title h5">Menú Familiar</h3>
+                            <p class="card-text text-muted small flex-grow-1">
+                                Combo perfecto para compartir en familia. Incluye variedad de platos principales y acompañamientos
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="h5 mb-0 text-primary fw-bold">$ 25.00</span>
+                                <div class="d-flex gap-1">
+                                    <a 
+                                        href="product-detail.html?id=5&name=Menu%20Familiar&price=25.00&image=familiar.png" 
+                                        class="btn btn-outline-primary btn-sm"
+                                        aria-label="Ver detalles del Menú Familiar"
+                                    >
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Controles de cantidad mejorados -->
+                            <div class="d-flex align-items-center justify-content-center mt-2 pt-2 border-top">
+                                <button class="btn btn-outline-secondary btn-sm quantity-btn" data-action="decrease">
+                                    <i class="bi bi-dash" aria-hidden="true"></i>
+                                </button>
+                                <input type="number" class="form-control form-control-sm mx-2 text-center quantity-input" 
+                                       value="1" min="1" max="10" style="width: 60px;">
+                                <button class="btn btn-outline-secondary btn-sm quantity-btn" data-action="increase">
+                                    <i class="bi bi-plus" aria-hidden="true"></i>
+                                </button>
+                                <button 
+                                    class="btn btn-primary btn-sm add-to-cart ms-2" 
+                                    data-product-id="5"
+                                    data-product-name="Menú Familiar"
+                                    data-product-price="25.00"
+                                    data-product-image="images/familiar.png"
+                                    aria-label="Agregar Menú Familiar al carrito"
+                                >
+                                    <i class="bi bi-cart-plus me-1" aria-hidden="true"></i>
+                                    Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <article class="card h-100 product-card" data-category="breakfast">
+                        <div class="position-relative product-image-container">
+                            <img 
+                                src="../images/desayuno-americano.png" 
+                                class="card-img-top product-image" 
+                                alt="Desayuno Americano con huevos, tocino y tostadas"
+                            >
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                                    4.0
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title h5">Desayuno Americano</h3>
+                            <p class="card-text text-muted small flex-grow-1">
+                                Huevos al gusto, tocino, salchicha y tostadas
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="h5 mb-0 text-primary fw-bold">$ 8.00</span>
+                                <div class="d-flex gap-1">
+                                    <a 
+                                        href="product-detail.html?id=1&name=Desayuno%20Americano&price=8.00&image=desayuno-americano.png" 
+                                        class="btn btn-outline-primary btn-sm"
+                                        aria-label="Ver detalles del Desayuno Americano"
+                                    >
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <button 
+                                        class="btn btn-primary btn-sm add-to-cart" 
+                                        data-product-id="1"
+                                        data-product-name="Desayuno Americano"
+                                        data-product-price="8.00"
+                                        data-product-image="images/desayuno-americano.png"
+                                        aria-label="Agregar Desayuno Americano al carrito"
+                                    >
+                                        <i class="bi bi-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <article class="card h-100 product-card" data-category="meat">
+                        <div class="position-relative product-image-container">
+                            <img 
+                                src="../images/bowl-carne.png" 
+                                class="card-img-top product-image" 
+                                alt="Bowl de carne a la parrilla con vegetales"
+                            >
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                                    4.0
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title h5">Bowl de carne a la parrilla</h3>
+                            <p class="card-text text-muted small flex-grow-1">
+                                Carne a la parrilla con salsa y vegetales
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="h5 mb-0 text-primary fw-bold">$ 10.50</span>
+                                <div class="d-flex gap-1">
+                                    <a 
+                                        href="product-detail.html?id=2&name=Bowl%20de%20carne%20a%20la%20parrilla&price=10.50&image=bowl-carne.png" 
+                                        class="btn btn-outline-primary btn-sm"
+                                        aria-label="Ver detalles del Bowl de carne a la parrilla"
+                                    >
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <button 
+                                        class="btn btn-primary btn-sm add-to-cart" 
+                                        data-product-id="2"
+                                        data-product-name="Bowl de carne a la parrilla"
+                                        data-product-price="10.50"
+                                        data-product-image="images/bowl-carne.png"
+                                        aria-label="Agregar Bowl de carne a la parrilla al carrito"
+                                    >
+                                        <i class="bi bi-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <article class="card h-100 product-card" data-category="pasta">
+                        <div class="position-relative product-image-container">
+                            <img 
+                                src="../images/salchipapa.png" 
+                                class="card-img-top product-image" 
+                                alt="Salchipapa con papas fritas y salsas"
+                            >
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                                    4.5
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title h5">Salchipapa</h3>
+                            <p class="card-text text-muted small flex-grow-1">
+                                Papas fritas con salchicha y salsas variadas
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="h5 mb-0 text-primary fw-bold">$ 5.50</span>
+                                <div class="d-flex gap-1">
+                                    <a 
+                                        href="product-detail.html?id=3&name=Salchipapa&price=5.50&image=salchipapa.png" 
+                                        class="btn btn-outline-primary btn-sm"
+                                        aria-label="Ver detalles de la Salchipapa"
+                                    >
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <button 
+                                        class="btn btn-primary btn-sm add-to-cart" 
+                                        data-product-id="3"
+                                        data-product-name="Salchipapa"
+                                        data-product-price="5.50"
+                                        data-product-image="images/salchipapa.png"
+                                        aria-label="Agregar Salchipapa al carrito"
+                                    >
+                                        <i class="bi bi-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <article class="card h-100 product-card" data-category="hamburger">
+                        <div class="position-relative product-image-container">
+                            <img 
+                                src="../images/hamburguesa-queso.png" 
+                                class="card-img-top product-image" 
+                                alt="Hamburguesa de queso con cebolla y lechuga"
+                            >
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                                    4.0
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title h5">Hamburguesa de queso</h3>
+                            <p class="card-text text-muted small flex-grow-1">
+                                Jugosa hamburguesa con queso, cebolla y lechuga
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="h5 mb-0 text-primary fw-bold">$ 8.50</span>
+                                <div class="d-flex gap-1">
+                                    <a 
+                                        href="product-detail.html?id=4&name=Hamburguesa%20de%20queso&price=8.50&image=hamburguesa-queso.png" 
+                                        class="btn btn-outline-primary btn-sm"
+                                        aria-label="Ver detalles de la Hamburguesa de queso"
+                                    >
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <button 
+                                        class="btn btn-primary btn-sm add-to-cart" 
+                                        data-product-id="4"
+                                        data-product-name="Hamburguesa de queso"
+                                        data-product-price="8.50"
+                                        data-product-image="images/hamburguesa-queso.png"
+                                        aria-label="Agregar Hamburguesa de queso al carrito"
+                                    >
+                                        <i class="bi bi-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <article class="card h-100 product-card" data-category="pizza">
+                        <div class="position-relative product-image-container">
+                            <img 
+                                src="../images/pizza-margherita.png" 
+                                class="card-img-top product-image" 
+                                alt="Pizza Margherita con tomate, mozzarella y albahaca"
+                            >
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                                    4.5
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title h5">Pizza Margherita</h3>
+                            <p class="card-text text-muted small flex-grow-1">
+                                Pizza clásica con tomate, mozzarella y albahaca
+                            </p>
+                            <div class="mb-2">
+                                <small class="text-warning">
+                                    <i class="bi bi-exclamation-triangle-fill me-1" aria-hidden="true"></i>
+                                    Contiene: gluten, lactosa
+                                </small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="h5 mb-0 text-primary fw-bold">$ 12.00</span>
+                                <div class="d-flex gap-1">
+                                    <a 
+                                        href="product-detail.html?id=6&name=Pizza%20Margherita&price=12.00&image=pizza-margherita.png" 
+                                        class="btn btn-outline-primary btn-sm"
+                                        aria-label="Ver detalles de la Pizza Margherita"
+                                    >
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <button 
+                                        class="btn btn-primary btn-sm add-to-cart" 
+                                        data-product-id="6"
+                                        data-product-name="Pizza Margherita"
+                                        data-product-price="12.00"
+                                        data-product-image="images/pizza-margherita.png"
+                                        aria-label="Agregar Pizza Margherita al carrito"
+                                    >
+                                        <i class="bi bi-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <article class="card h-100 product-card" data-category="combo">
+                        <div class="position-relative product-image-container">
+                            <img 
+                                src="../images/whopper.png" 
+                                class="card-img-top product-image" 
+                                alt="Combo Whopper con hamburguesa, papas y bebida"
+                            >
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                                    4.5
+                                </span>
+                            </div>
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-info">
+                                    <i class="bi bi-cup-straw me-1" aria-hidden="true"></i>
+                                    Combo
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title h5">Combo Whopper</h3>
+                            <p class="card-text text-muted small flex-grow-1">
+                                Hamburguesa Whopper con papas y bebida
+                            </p>
+                            <div class="mb-2">
+                                <small class="text-warning">
+                                    <i class="bi bi-exclamation-triangle-fill me-1" aria-hidden="true"></i>
+                                    Contiene: gluten, lactosa
+                                </small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="h5 mb-0 text-primary fw-bold">$ 15.99</span>
+                                <div class="d-flex gap-1">
+                                    <a 
+                                        href="product-detail.html?id=7&name=Combo%20Whopper&price=15.99&image=whopper.png" 
+                                        class="btn btn-outline-primary btn-sm"
+                                        aria-label="Ver detalles del Combo Whopper"
+                                    >
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </a>
+                                    <button 
+                                        class="btn btn-primary btn-sm add-to-cart" 
+                                        data-product-id="7"
+                                        data-product-name="Combo Whopper"
+                                        data-product-price="15.99"
+                                        data-product-image="images/whopper.png"
+                                        aria-label="Agregar Combo Whopper al carrito"
+                                    >
+                                        <i class="bi bi-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección de promociones especiales mejorada -->
+        <section class="mt-5">
+            <div class="row g-3 mb-4">
+                <div class="col-md-8">
+                    <div class="card special-offer-banner text-white h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-warning text-dark me-2">
+                                            <i class="bi bi-star-fill me-1" aria-hidden="true"></i>
+                                            OFERTA ESPECIAL
+                                        </span>
+                                        <small class="text-light">¡Por tiempo limitado!</small>
+                                    </div>
+                                    <h2 class="card-title h4 mb-2">Oferta especial del mes</h2>
+                                    <p class="card-text mb-3">
+                                        Disfruta de nuestras mejores hamburguesas con descuentos especiales. 
+                                        <strong>¡20% de descuento en combos!</strong>
+                                    </p>
+                                    <a href="#" class="btn btn-light">
+                                        <i class="bi bi-eye me-2" aria-hidden="true"></i>
+                                        Ver ofertas
+                                    </a>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <img 
+                                        src="../images/burger-offer.png" 
+                                        alt="Hamburguesa especial con papas fritas" 
+                                        class="img-fluid rounded"
+                                        style="max-height: 150px;"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-gradient bg-success text-white h-100">
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <i class="bi bi-gift fs-1 mb-3" aria-hidden="true"></i>
+                            <h3 class="card-title h5 mb-2">Programa de Fidelidad</h3>
+                            <p class="card-text small mb-3">
+                                Acumula puntos con cada compra y obtén descuentos exclusivos
+                            </p>
+                            <button class="btn btn-light btn-sm">
+                                <i class="bi bi-plus-circle me-1" aria-hidden="true"></i>
+                                Únete ahora
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    
+    <nav class="navbar navbar-light bg-light border-top fixed-bottom d-sm-none">
+        <div class="container-fluid">
+            <div class="row w-100 text-center">
+                <div class="col">
+                    <a href="home.html" class="nav-link active">
+                        <i class="bi bi-house-fill d-block" aria-hidden="true"></i>
+                        <small>Inicio</small>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-search d-block" aria-hidden="true"></i>
+                        <small>Buscar</small>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="cart.html" class="nav-link position-relative">
+                        <i class="bi bi-cart d-block" aria-hidden="true"></i>
+                        <small>Carrito</small>
+                        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                            3
+                        </span>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#deliveryInfoModal">
+                        <i class="bi bi-info-circle d-block" aria-hidden="true"></i>
+                        <small>Info</small>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-person d-block" aria-hidden="true"></i>
+                        <small>Perfil</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <!-- Modal de información de entrega -->
+    <div class="modal fade" id="deliveryInfoModal" tabindex="-1" aria-labelledby="deliveryInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deliveryInfoModalLabel">
+                        <i class="bi bi-info-circle me-2 text-primary" aria-hidden="true"></i>
+                        Información de Entrega y Políticas
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">
+                                <i class="bi bi-clock me-2" aria-hidden="true"></i>
+                                Tiempos de Entrega
+                            </h6>
+                            <ul class="list-unstyled">
+                                <li><strong>Horario normal:</strong> 25-35 minutos</li>
+                                <li><strong>Horario pico:</strong> 35-45 minutos</li>
+                                <li><strong>Fines de semana:</strong> 30-40 minutos</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-success">
+                                <i class="bi bi-truck me-2" aria-hidden="true"></i>
+                                Opciones de Entrega
+                            </h6>
+                            <ul class="list-unstyled">
+                                <li><strong>Envío gratis:</strong> Pedidos >$15</li>
+                                <li><strong>Envío express:</strong> +$2 (15-20 min)</li>
+                                <li><strong>Recoger en tienda:</strong> Gratis</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-warning">
+                                <i class="bi bi-credit-card me-2" aria-hidden="true"></i>
+                                Métodos de Pago
+                            </h6>
+                            <ul class="list-unstyled">
+                                <li>• Tarjetas de crédito/débito</li>
+                                <li>• PayPal</li>
+                                <li>• Pago en efectivo al entregar</li>
+                                <li>• Transferencias bancarias</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-info">
+                                <i class="bi bi-shield-check me-2" aria-hidden="true"></i>
+                                Política de Devoluciones
+                            </h6>
+                            <ul class="list-unstyled">
+                                <li>• 100% satisfacción garantizada</li>
+                                <li>• Reembolso completo por problemas</li>
+                                <li>• Soporte 24/7 disponible</li>
+                                <li>• Cambios sin costo adicional</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                        <i class="bi bi-check-circle me-1" aria-hidden="true"></i>
+                        Entendido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para funcionalidad mejorada -->
+    <script>
+        // Funcionalidad de controles de cantidad
+        document.addEventListener('DOMContentLoaded', function() {
+            // Manejar botones de cantidad
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.dataset.action;
+                    const input = this.parentElement.querySelector('.quantity-input');
+                    let value = parseInt(input.value);
+                    
+                    if (action === 'increase' && value < 10) {
+                        input.value = value + 1;
+                    } else if (action === 'decrease' && value > 1) {
+                        input.value = value - 1;
+                    }
+                });
+            });
+
+            // Funcionalidad de filtros
+            document.getElementById('priceFilter')?.addEventListener('change', function() {
+                const selectedPrice = this.value;
+                const products = document.querySelectorAll('.product-card');
+                
+                products.forEach(product => {
+                    const priceText = product.querySelector('.text-primary').textContent;
+                    const price = parseFloat(priceText.replace('$', '').trim());
+                    let show = true;
+                    
+                    switch(selectedPrice) {
+                        case 'low':
+                            show = price < 10;
+                            break;
+                        case 'medium':
+                            show = price >= 10 && price <= 20;
+                            break;
+                        case 'high':
+                            show = price > 20;
+                            break;
+                        default:
+                            show = true;
+                    }
+                    
+                    product.parentElement.style.display = show ? 'block' : 'none';
+                });
+            });
+
+            // Mensaje de éxito al agregar al carrito
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.dataset.productName;
+                    const quantity = this.parentElement.parentElement.querySelector('.quantity-input')?.value || 1;
+                    
+                    // Crear toast de confirmación
+                    const toastHtml = `
+                        <div class="toast show" role="alert">
+                            <div class="toast-header">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <strong class="me-auto">¡Agregado al carrito!</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                            </div>
+                            <div class="toast-body">
+                                ${quantity}x ${productName} agregado correctamente
+                            </div>
+                        </div>
+                    `;
+                    
+                    const toastContainer = document.getElementById('toastContainer');
+                    toastContainer.innerHTML = toastHtml;
+                    
+                    // Auto-hide toast after 3 seconds
+                    setTimeout(() => {
+                        const toast = toastContainer.querySelector('.toast');
+                        if (toast) {
+                            toast.classList.remove('show');
+                            setTimeout(() => toast.remove(), 300);
+                        }
+                    }, 3000);
+                });
+            });
+        });
+    </script>
+    
+    <script src="../js/home.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/cart.js"></script>
+<footer style="text-align:center; padding:20px; font-size:14px;">Desarrollado por Steeven</footer>
+</body>
+</html>
